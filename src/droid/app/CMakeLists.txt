@@ -1,10 +1,15 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-add_subdirectory( ../../common ../../common/bin)
+include_directories(src/main/cpp/)
+include_directories(../../common/)
 
-find_library(log-lib log)
-
-add_library(game SHARED ${SOURCES})
+add_library(game SHARED
+    src/main/cpp/glwrapper.h
+    src/main/cpp/jni/centaureaproj_com_centaurea_GameLibJNIWrapper.cpp
+    src/main/cpp/jni/centaureaproj_com_centaurea_GameLibJNIWrapper.h
+    ../../common/game.h
+    ../../common/game.cpp
+)
 set_target_properties(game PROPERTIES LINKER_LANGUAGE CXX)
 
 find_path(GLES2_INCLUDE_DIR GLES2/gl2.h
