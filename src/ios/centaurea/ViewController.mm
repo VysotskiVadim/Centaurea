@@ -1,33 +1,36 @@
 #import "ViewController.h"
-#include "game.hpp"
+#import "game.h"
 
 @interface ViewController () {
 }
 
 @property (strong, nonatomic) EAGLContext *context;
+@property Cenraurea::Common::Game::Game *game;
 
-- (void)setupGL;
+//- (void)setupGL;
+//
+//@end
 
 @end
-
 @implementation ViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    
+
     if (!self.context) {
         NSLog(@"Failed to create ES context");
     }
-    
+
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    
+
+    self.game = new Cenraurea::Common::Game::Game;
     [self setupGL];
-    
+//
 //    EAGLContext * context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
 //    GLKView *view = [[GLKView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //    view.context = context;
@@ -41,6 +44,7 @@
 
 - (void)dealloc
 {
+    [super dealloc];
     if ([EAGLContext currentContext] == self.context) {
         [EAGLContext setCurrentContext:nil];
     }
@@ -49,15 +53,16 @@
 - (void)setupGL
 {
     [EAGLContext setCurrentContext:self.context];
-    on_surface_created();
-    on_surface_changed();
+    self.game->on_surface_created();
+    self.game->on_surface_changed();
 }
 
 #pragma mark - GLKView and GLKViewController delegate methods
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    on_draw_frame();
+    self.game->on_draw_frame();
 }
 
 @end
+
