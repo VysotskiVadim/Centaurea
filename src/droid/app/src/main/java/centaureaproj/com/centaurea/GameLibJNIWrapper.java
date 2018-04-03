@@ -2,7 +2,7 @@ package centaureaproj.com.centaurea;
 
 public class GameLibJNIWrapper {
     static {
-        System.loadLibrary("game");
+        System.loadLibrary("androidgame");
     }
 
     public static native void on_surface_created();

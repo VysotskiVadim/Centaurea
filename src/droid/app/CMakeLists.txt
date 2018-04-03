@@ -1,20 +1,15 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-include_directories(src/main/cpp/)
-include_directories(../../common/)
+set(CMAKE_CXX_STANDARD 11)
+set(PLATFORM_ANDROID Y)
 
-add_library(game SHARED
-    src/main/cpp/glwrapper.h
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../common/game ${CMAKE_BINARY_DIR}/game)
+
+add_library(androidgame SHARED
     src/main/cpp/jni/centaureaproj_com_centaurea_GameLibJNIWrapper.cpp
     src/main/cpp/jni/centaureaproj_com_centaurea_GameLibJNIWrapper.h
-    ../../common/game.h
-    ../../common/game.cpp
 )
-set_target_properties(game PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(androidgame PROPERTIES LINKER_LANGUAGE CXX)
 
-find_path(GLES2_INCLUDE_DIR GLES2/gl2.h
-    HINTS ${ANDROID_NDK})
-find_library(GLES2_LIBRARY libGLESv2.so
-    HINTS ${GLES2_INCLUDE_DIR}/../lib)
-target_include_directories(game PUBLIC ${GLES2_INCLUDE_DIR})
-target_link_libraries(game ${GLES2_LIBRARY})
+target_include_directories(androidgame PUBLIC ${GAME_INCLUDE_DIR})
+target_link_libraries(androidgame ${GAME_LIBRARY})

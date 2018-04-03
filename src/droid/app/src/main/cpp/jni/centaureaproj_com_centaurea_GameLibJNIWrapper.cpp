@@ -3,18 +3,20 @@
 #include "centaureaproj_com_centaurea_GameLibJNIWrapper.h"
 #include <game.h>
 
+Cenraurea::Common::Game::Game game;
+
 JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1surface_1created
   (JNIEnv *env, jclass obj) {
-    on_surface_created();
+    game.on_surface_created();
   }
 
 
 JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1surface_1changed
   (JNIEnv *env, jclass obj, jint width, jint height) {
-    on_surface_changed();
+    game.on_surface_changed();
   }
 
 JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1draw_1frame
   (JNIEnv *, jclass) {
-    on_draw_frame();
+    game.on_draw_frame();
   }
