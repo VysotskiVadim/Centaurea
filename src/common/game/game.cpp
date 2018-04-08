@@ -14,10 +14,11 @@ void main()
 
 const GLchar *_fragmentShader = R"glsl(#version 300 es
 precision mediump float;
+uniform vec3 triangleColor;
 out vec4 outColor;
 void main()
 {
-    outColor = vec4(1.0, 1.0, 1.0, 1.0);
+    outColor = vec4(triangleColor, 1.0);
 }
 )glsl";
 
@@ -86,6 +87,9 @@ void Game::on_surface_created(void) {
     glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     glEnableVertexAttribArray(posAttrib);
+
+    GLint uniColor = glGetUniformLocation(_shaderProgram, "triangleColor");
+    glUniform3f(uniColor, 1.0f, 0.0f, 0.0f);
 }
 
 void Game::on_surface_changed(void) {
