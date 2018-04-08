@@ -14,13 +14,7 @@ set(GAME_LIBRARY game PARENT_SCOPE)
 
 if(PLATFORM_ANDROID)
     add_definitions(-DPLATFORM_ANDROID)
-
-    find_path(GLES2_INCLUDE_DIR GLES2/gl2.h
-        HINTS ${ANDROID_NDK})
-    find_library(GLES2_LIBRARY libGLESv2.so
-        HINTS ${GLES2_INCLUDE_DIR}/../lib)
-    target_include_directories(game PUBLIC ${GLES2_INCLUDE_DIR})
-    target_link_libraries(game ${GLES2_LIBRARY})
+    target_link_libraries(game GLESv3)
 elseif(PLATFORM_IOS)
     add_definitions(-DPLATFORM_IOS)
 
