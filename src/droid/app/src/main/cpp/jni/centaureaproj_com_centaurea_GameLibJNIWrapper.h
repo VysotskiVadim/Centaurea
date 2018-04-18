@@ -13,7 +13,7 @@ extern "C" {
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1surface_1created
-  (JNIEnv *, jclass);
+  (JNIEnv *, jobject);
 
 /*
  * Class:     centaureaproj_com_centaurea_GameLibJNIWrapper
@@ -21,7 +21,7 @@ JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1su
  * Signature: (II)V
  */
 JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1surface_1changed
-  (JNIEnv *, jclass, jint, jint);
+  (JNIEnv *, jobject , jint, jint);
 
 /*
  * Class:     centaureaproj_com_centaurea_GameLibJNIWrapper
@@ -29,7 +29,7 @@ JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1su
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1draw_1frame
-  (JNIEnv *, jclass);
+  (JNIEnv *, jobject);
 
 #ifdef __cplusplus
 }

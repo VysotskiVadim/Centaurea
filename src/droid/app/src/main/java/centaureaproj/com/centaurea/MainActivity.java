@@ -3,11 +3,14 @@ package centaureaproj.com.centaurea;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
+import android.opengl.GLUtils;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             glSurfaceView.setEGLContextClientVersion(3);
-            glSurfaceView.setRenderer(new RendererWrapper());
+            glSurfaceView.setRenderer(new RendererWrapper(new GameLibJNIWrapper(this)));
             rendererSet = true;
             setContentView(glSurfaceView);
         } else {

@@ -4,6 +4,7 @@ add_library(game SHARED
     glwrapper.h
     game.h
     game.cpp
+    ITextureLoader.h
 )
 
 set(CMAKE_CXX_STANDARD 11)

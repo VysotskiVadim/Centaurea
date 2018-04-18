@@ -8,6 +8,8 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../common/game ${CMAKE_BINARY_DI
 add_library(androidgame SHARED
     src/main/cpp/jni/centaureaproj_com_centaurea_GameLibJNIWrapper.cpp
     src/main/cpp/jni/centaureaproj_com_centaurea_GameLibJNIWrapper.h
+    src/main/cpp/textures/AndroidTextureLoader.h
+    src/main/cpp/textures/AndroidTextureLoader.cpp
 )
 set_target_properties(androidgame PROPERTIES LINKER_LANGUAGE CXX)
 

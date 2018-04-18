@@ -2,21 +2,27 @@
 #include <jni.h>
 #include "centaureaproj_com_centaurea_GameLibJNIWrapper.h"
 #include <game.h>
+#include "ITextureLoader.h"
+#include "../textures/AndroidTextureLoader.h"
 
-Cenraurea::Common::Game::Game game;
+using Cenraurea::Common::Game::Game;
+
+Game *game;
 
 JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1surface_1created
-  (JNIEnv *env, jclass obj) {
-    game.on_surface_created();
+  (JNIEnv *env, jobject obj) {
+    std::shared_ptr<ITextureLoader> textureLoader(new AndroidTextureLoader(env, obj));
+    game = new Game(textureLoader);
+    game->on_surface_created();
   }
 
 
 JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1surface_1changed
-  (JNIEnv *env, jclass obj, jint width, jint height) {
-    game.on_surface_changed();
+  (JNIEnv *env, jobject obj, jint width, jint height) {
+    game->on_surface_changed();
   }
 
 JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1draw_1frame
-  (JNIEnv *, jclass) {
-    game.on_draw_frame();
+  (JNIEnv *, jobject obj) {
+    game->on_draw_frame();
   }
