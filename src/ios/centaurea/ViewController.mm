@@ -1,11 +1,17 @@
 #import "ViewController.h"
 #import "game.h"
+#import "IosTextureLoader.hpp"
+#import "ITextureLoader.h"
+#import <memory>
+
+using Cenraurea::Common::Game::Game;
+using Cenraurea::Common::Game::ITextureLoader;
 
 @interface ViewController () {
 }
 
 @property (strong, nonatomic) EAGLContext *context;
-@property Cenraurea::Common::Game::Game *game;
+@property Game *game;
 
 //- (void)setupGL;
 //
@@ -27,19 +33,11 @@
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-
-    self.game = new Cenraurea::Common::Game::Game;
+    
+    
+    ITextureLoader *textureLoader = new IosTextureLoader;
+    self.game = new Cenraurea::Common::Game::Game(std::shared_ptr<ITextureLoader>(textureLoader));
     [self setupGL];
-//
-//    EAGLContext * context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-//    GLKView *view = [[GLKView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    view.context = context;
-//    on_surface_created();
-//    on_surface_changed();
-//    view.delegate = self;
-//    [self.window addSubview:view];
-//    
-//    self.window.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)dealloc
