@@ -24,10 +24,13 @@ precision mediump float;
 in vec3 Color;
 in vec2 TextureCoordinates;
 out vec4 outColor;
-uniform sampler2D tex;
+uniform sampler2D texKitten;
+uniform sampler2D texPuppy;
 void main()
 {
-    outColor = texture(tex, TextureCoordinates) * vec4(Color, 1.0);
+    vec4 colKitten = texture(texKitten, TextureCoordinates);
+    vec4 colPuppy = texture(texPuppy, TextureCoordinates);
+    outColor = mix(colKitten, colPuppy, 0.5);
 }
 )glsl";
 
@@ -118,10 +121,22 @@ void Game::on_surface_created(void) {
     glEnableVertexAttribArray(textureCoordinatesAttribute);
     glVertexAttribPointer(textureCoordinatesAttribute, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(5*sizeof(float)));
 
-    GLuint tex;
-    glGenTextures(1, &tex);
-    glBindTexture(GL_TEXTURE_2D, tex);
+    GLuint textures[2];
+    glGenTextures(2, textures);
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, textures[0]);
     _textureLoader->loadTexture("logo");
+    glUniform1i(glGetUniformLocation(_shaderProgram, "texKitten"), 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, textures[1]);
+    _textureLoader->loadTexture("logo2");
+    glUniform1i(glGetUniformLocation(_shaderProgram, "texPuppy"), 1);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

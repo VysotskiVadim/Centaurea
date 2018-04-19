@@ -20,6 +20,7 @@ set (
     IMAGES
     images/Default-568h@2x.png
     images/texture_logo.png
+    images/texture_logo2.png
 )
 
 set (
