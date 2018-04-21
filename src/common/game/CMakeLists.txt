@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.4.1)
 
+
+
 add_library(game SHARED
     glwrapper.h
     game.h
@@ -12,6 +14,10 @@ set_target_properties(game PROPERTIES LINKER_LANGUAGE CXX)
 
 set(GAME_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
 set(GAME_LIBRARY game PARENT_SCOPE)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
+find_package(GLM REQUIRED)
+include_directories(${GLM_INCLUDE_DIRS})
 
 if(PLATFORM_ANDROID)
     add_definitions(-DPLATFORM_ANDROID)

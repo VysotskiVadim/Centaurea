@@ -1,6 +1,9 @@
 #include "game.h"
 #include "glwrapper.h"
 #include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 using Cenraurea::Common::Game::Game;
 
@@ -11,9 +14,12 @@ in vec3 color;
 
 out vec3 Color;
 out vec2 TextureCoordinates;
+
+uniform mat4 trans;
+
 void main()
 {
-    gl_Position = vec4(position, 0.0, 1.0);
+    gl_Position = trans * vec4(position, 0.0, 1.0);
     Color = color;
     TextureCoordinates = textureCoordinates;
 }
@@ -141,6 +147,10 @@ void Game::on_surface_created(void) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+
+    _startTime = std::chrono::high_resolution_clock::now();
+    
 }
 
 void Game::on_surface_changed(void) {
@@ -148,6 +158,19 @@ void Game::on_surface_changed(void) {
 }
 
 void Game::on_draw_frame(void) {
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    float time = std::chrono::duration_cast<std::chrono::duration<float>>(currentTime - _startTime).count();
+    
+    glm::mat4 trans;
+    trans = glm::rotate(
+                        trans,
+                        time * glm::radians(180.0f),
+                        glm::vec3(0.0f, 0.0f, 1.0f)
+                        );
+    
+    GLint uniTrans = glGetUniformLocation(_shaderProgram, "trans");
+    glUniformMatrix4fv(uniTrans, 1, GL_FALSE, glm::value_ptr(trans));
+    
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
