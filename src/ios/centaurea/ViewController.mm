@@ -33,7 +33,7 @@ using Cenraurea::Common::Game::ITextureLoader;
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    
+    view.drawableStencilFormat = GLKViewDrawableStencilFormat8;
     
     ITextureLoader *textureLoader = new IosTextureLoader;
     self.game = new Cenraurea::Common::Game::Game(std::shared_ptr<ITextureLoader>(textureLoader));

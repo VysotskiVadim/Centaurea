@@ -18,11 +18,12 @@ out vec2 TextureCoordinates;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 proj;
+uniform vec3 overrideColor;
 
 void main()
 {
     gl_Position = proj * view * model * vec4(position, 1.0);
-    Color = color;
+    Color = overrideColor * color;
     TextureCoordinates = textureCoordinates;
 }
 )glsl";
@@ -131,7 +132,14 @@ void Game::on_surface_created(void) {
         0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
         0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
         -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        
+        -1.0f, -1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, -1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+        1.0f,  1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+        1.0f,  1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+        -1.0f,  1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+        -1.0f, -1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f
     };
     int rowSize = 8 * sizeof(GLfloat);
 
@@ -139,18 +147,6 @@ void Game::on_surface_created(void) {
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-//    // Create an element array
-//    GLuint ebo;
-//    glGenBuffers(1, &ebo);
-//
-//    GLuint elements[] = {
-//            0, 1, 2,
-//            2, 3, 0
-//    };
-//
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
     GLint positionAttribute = glGetAttribLocation(_shaderProgram, "position");
     glEnableVertexAttribArray(positionAttribute);
@@ -189,14 +185,16 @@ void Game::on_surface_created(void) {
     _startTime = std::chrono::high_resolution_clock::now();
     
     glEnable(GL_DEPTH_TEST);
+    
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void Game::on_surface_changed(std::int32_t width, std::int32_t height) {
     glm::mat4 view = glm::lookAt(
-            glm::vec3(1.2f, 1.2f, 1.2f),
-            glm::vec3(0.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 0.0f, 1.0f)
-    );
+                                 glm::vec3(3.5f, 3.5f, 3.0f),
+                                 glm::vec3(0.0f, 0.0f, 0.0f),
+                                 glm::vec3(0.0f, 0.0f, 1.0f)
+                                 );
     GLint uniView = glGetUniformLocation(_shaderProgram, "view");
     glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
 
@@ -217,11 +215,36 @@ void Game::on_draw_frame(void) {
                         glm::vec3(0.0f, 0.0f, 1.0f)
                         );
     
-    GLint uniTrans = glGetUniformLocation(_shaderProgram, "model");
-    glUniformMatrix4fv(uniTrans, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    GLint uniModel = glGetUniformLocation(_shaderProgram, "model");
+    glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    
+    GLint uniColor = glGetUniformLocation(_shaderProgram, "overrideColor");
+    glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDrawArrays(GL_TRIANGLES, 0, 36);
+    
+    glEnable(GL_STENCIL_TEST);
+    // Draw floor
+    glStencilFunc(GL_ALWAYS, 1, 0xFF); // Set any stencil to 1
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    glStencilMask(0xFF); // Write to stencil buffer
+    glDepthMask(GL_FALSE); // Don't write to depth buffer
+    glClear(GL_STENCIL_BUFFER_BIT); // Clear stencil buffer (0 by default)
+    glDrawArrays(GL_TRIANGLES, 36, 6);
+    
+    glStencilFunc(GL_EQUAL, 1, 0xFF);
+    glStencilMask(0x00);
+    glDepthMask(GL_TRUE);
+    modelMatrix = glm::scale(
+                       glm::translate(modelMatrix, glm::vec3(0, 0, -1)),
+                       glm::vec3(1, 1, -1)
+                       );
+    glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    glUniform3f(uniColor, 0.3f, 0.3f, 0.3f);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    
+    glDisable(GL_STENCIL_TEST);
 }
 
 Game::Game(std::shared_ptr<ITextureLoader> textureLoader)
