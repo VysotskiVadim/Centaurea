@@ -55,12 +55,16 @@ using Cenraurea::Common::Game::ITextureLoader;
     self.game->on_surface_changed(self.view.bounds.size.width, self.view.bounds.size.height);
 }
 
-#pragma mark - GLKView and GLKViewController delegate methods
-
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
     glClear(GL_COLOR_BUFFER_BIT);
     self.game->on_draw_frame();
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    self.game->on_surface_changed(size.width, size.height);
 }
 
 @end
