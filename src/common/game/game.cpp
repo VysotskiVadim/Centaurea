@@ -9,7 +9,7 @@ using Cenraurea::Common::Game::Game;
 
 const char* _vertexSource = R"glsl(#version 300 es
 in vec2 textureCoordinates;
-in vec2 position;
+in vec3 position;
 in vec3 color;
 
 out vec3 Color;
@@ -21,7 +21,7 @@ uniform mat4 proj;
 
 void main()
 {
-    gl_Position = proj * view * model * vec4(position, 0.0, 1.0);
+    gl_Position = proj * view * model * vec4(position, 1.0);
     Color = color;
     TextureCoordinates = textureCoordinates;
 }
@@ -36,9 +36,7 @@ uniform sampler2D texKitten;
 uniform sampler2D texPuppy;
 void main()
 {
-    vec4 colKitten = texture(texKitten, TextureCoordinates);
-    vec4 colPuppy = texture(texPuppy, TextureCoordinates);
-    outColor = mix(colKitten, colPuppy, 0.5);
+    outColor = vec4(Color, 1.0) * mix(texture(texKitten, TextureCoordinates), texture(texPuppy, TextureCoordinates), 0.5);
 }
 )glsl";
 
@@ -92,42 +90,79 @@ void Game::on_surface_created(void) {
         return;
     }
 
-    float vertices[] = {
-        //  Position      Color             Texcoords
-        -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
-        0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
-        0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
-        -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
+    GLfloat vertices[] = {
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        
+        -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        
+        0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f
     };
+    int rowSize = 8 * sizeof(GLfloat);
 
     GLuint VBO;
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // Create an element array
-    GLuint ebo;
-    glGenBuffers(1, &ebo);
-
-    GLuint elements[] = {
-            0, 1, 2,
-            2, 3, 0
-    };
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+//    // Create an element array
+//    GLuint ebo;
+//    glGenBuffers(1, &ebo);
+//
+//    GLuint elements[] = {
+//            0, 1, 2,
+//            2, 3, 0
+//    };
+//
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
     GLint positionAttribute = glGetAttribLocation(_shaderProgram, "position");
     glEnableVertexAttribArray(positionAttribute);
-    glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), 0);
+    glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, rowSize, 0);
 
     GLuint colorAttribute = glGetAttribLocation(_shaderProgram, "color");
     glEnableVertexAttribArray(colorAttribute);
-    glVertexAttribPointer(colorAttribute, 3, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(2*sizeof(float)));
+    glVertexAttribPointer(colorAttribute, 3, GL_FLOAT, GL_FALSE, rowSize, (void*)(3*sizeof(float)));
 
     GLint textureCoordinatesAttribute = glGetAttribLocation(_shaderProgram, "textureCoordinates");
     glEnableVertexAttribArray(textureCoordinatesAttribute);
-    glVertexAttribPointer(textureCoordinatesAttribute, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(5*sizeof(float)));
+    glVertexAttribPointer(textureCoordinatesAttribute, 2, GL_FLOAT, GL_FALSE, rowSize, (void*)(6*sizeof(float)));
 
     GLuint textures[2];
     glGenTextures(2, textures);
@@ -153,6 +188,7 @@ void Game::on_surface_created(void) {
 
     _startTime = std::chrono::high_resolution_clock::now();
     
+    glEnable(GL_DEPTH_TEST);
 }
 
 void Game::on_surface_changed(std::int32_t width, std::int32_t height) {
@@ -180,13 +216,12 @@ void Game::on_draw_frame(void) {
                         time * glm::radians(180.0f),
                         glm::vec3(0.0f, 0.0f, 1.0f)
                         );
-    float scale = sin(time);
-    modelMatrix = glm::scale(modelMatrix, glm::vec3(scale, scale, 1));
     
     GLint uniTrans = glGetUniformLocation(_shaderProgram, "model");
     glUniformMatrix4fv(uniTrans, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
 Game::Game(std::shared_ptr<ITextureLoader> textureLoader)
