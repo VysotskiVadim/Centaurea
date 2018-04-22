@@ -59,6 +59,7 @@ using Cenraurea::Common::Game::ITextureLoader;
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
+    glClear(GL_COLOR_BUFFER_BIT);
     self.game->on_draw_frame();
 }
 
