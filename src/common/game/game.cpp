@@ -15,11 +15,13 @@ in vec3 color;
 out vec3 Color;
 out vec2 TextureCoordinates;
 
-uniform mat4 trans;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 proj;
 
 void main()
 {
-    gl_Position = trans * vec4(position, 0.0, 1.0);
+    gl_Position = proj * view * model * vec4(position, 0.0, 1.0);
     Color = color;
     TextureCoordinates = textureCoordinates;
 }
@@ -154,23 +156,36 @@ void Game::on_surface_created(void) {
 }
 
 void Game::on_surface_changed(std::int32_t width, std::int32_t height) {
-    // No-op
+    glm::mat4 view = glm::lookAt(
+            glm::vec3(1.2f, 1.2f, 1.2f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(0.0f, 0.0f, 1.0f)
+    );
+    GLint uniView = glGetUniformLocation(_shaderProgram, "view");
+    glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
+
+    float_t screenRatio = ((float_t)width) / height;
+    glm::mat4 proj = glm::perspective(glm::radians(45.0f), screenRatio, 1.0f, 10.0f);
+    GLint uniProj = glGetUniformLocation(_shaderProgram, "proj");
+    glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
 }
 
 void Game::on_draw_frame(void) {
     auto currentTime = std::chrono::high_resolution_clock::now();
     float time = std::chrono::duration_cast<std::chrono::duration<float>>(currentTime - _startTime).count();
     
-    glm::mat4 trans;
-    trans = glm::rotate(
-                        trans,
+    glm::mat4 modelMatrix;
+    modelMatrix = glm::rotate(
+                        modelMatrix,
                         time * glm::radians(180.0f),
                         glm::vec3(0.0f, 0.0f, 1.0f)
                         );
+    float scale = sin(time);
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(scale, scale, 1));
     
-    GLint uniTrans = glGetUniformLocation(_shaderProgram, "trans");
-    glUniformMatrix4fv(uniTrans, 1, GL_FALSE, glm::value_ptr(trans));
-    
+    GLint uniTrans = glGetUniformLocation(_shaderProgram, "model");
+    glUniformMatrix4fv(uniTrans, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
