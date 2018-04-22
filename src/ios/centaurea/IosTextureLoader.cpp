@@ -7,7 +7,7 @@ void IosTextureLoader::loadTexture(std::string id) {
     std::string texturePath = "texture_" + id + ".png";
     UIImage* image = [UIImage imageNamed:[NSString stringWithCString:texturePath.c_str()
                                                             encoding:[NSString defaultCStringEncoding]]];
-    GLubyte* imageData = (GLubyte *)malloc(image.size.width * image.size.height * 4);
+    GLubyte* imageData = (GLubyte *)calloc(image.size.width * image.size.height, 4);
     CGContextRef imageContext = CGBitmapContextCreate(imageData, image.size.width, image.size.height, 8, image.size.width * 4, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast);
     CGContextDrawImage(imageContext, CGRectMake(0.0, 0.0, image.size.width, image.size.height), image.CGImage);
     CGContextRelease(imageContext);
