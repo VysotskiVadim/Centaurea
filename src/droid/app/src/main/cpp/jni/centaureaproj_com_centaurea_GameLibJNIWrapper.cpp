@@ -19,7 +19,7 @@ JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1su
 
 JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1surface_1changed
   (JNIEnv *env, jobject obj, jint width, jint height) {
-    game->on_surface_changed();
+    game->on_surface_changed(width, height);
   }
 
 JNIEXPORT void JNICALL Java_centaureaproj_com_centaurea_GameLibJNIWrapper_on_1draw_1frame

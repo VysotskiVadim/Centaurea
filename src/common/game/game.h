@@ -5,6 +5,7 @@
 #include "ITextureLoader.h"
 #include <chrono>
 
+
 namespace Cenraurea {
     namespace Common {
         namespace Game {
@@ -18,7 +19,7 @@ namespace Cenraurea {
             public:
                 Game(std::shared_ptr<ITextureLoader>);
                 void on_surface_created(void);
-                void on_surface_changed(void);
+                void on_surface_changed(std::int32_t width, std::int32_t height);
                 void on_draw_frame(void);
             };
 

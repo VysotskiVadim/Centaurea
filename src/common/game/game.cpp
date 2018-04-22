@@ -153,7 +153,7 @@ void Game::on_surface_created(void) {
     
 }
 
-void Game::on_surface_changed(void) {
+void Game::on_surface_changed(std::int32_t width, std::int32_t height) {
     // No-op
 }
 

@@ -52,7 +52,7 @@ using Cenraurea::Common::Game::ITextureLoader;
 {
     [EAGLContext setCurrentContext:self.context];
     self.game->on_surface_created();
-    self.game->on_surface_changed();
+    self.game->on_surface_changed(self.view.bounds.size.width, self.view.bounds.size.height);
 }
 
 #pragma mark - GLKView and GLKViewController delegate methods
