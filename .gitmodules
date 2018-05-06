@@ -1,0 +1,3 @@
+[submodule "dep/tinyobjloader"]
+	path = dep/tinyobjloader
+	url = git@github.com:syoyo/tinyobjloader.git
