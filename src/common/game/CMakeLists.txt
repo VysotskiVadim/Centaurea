@@ -1,12 +1,18 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../../dep/tinyobjloader ${CMAKE_BINARY_DIR}/tinyobjloader)
 
 add_library(game SHARED
     glwrapper.h
     game.h
     game.cpp
     ITextureLoader.h
+    GameObject.h
+    GameObject.cpp
+    IGraphicComponent.h
+    IGraphicComponentFactory.h
+    GameScene.h
+    GameScene.cpp
 )
 
 set(CMAKE_CXX_STANDARD 11)
