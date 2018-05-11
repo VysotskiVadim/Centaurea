@@ -1,4 +1,4 @@
-#include "game.h"
+#include "Game.h"
 
 using namespace Cenraurea::Common::GameEngine;
 
@@ -15,7 +15,7 @@ void Cenraurea::Common::GameEngine::Game::setGameScene(std::shared_ptr<IGameScen
 }
 
 void Game::on_surface_created(void) {
-    //_gameScene->initialize();
+    _gameScene->initialize();
 }
 
 void Game::on_draw_frame(void) {

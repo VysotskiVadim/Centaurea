@@ -18,7 +18,7 @@ namespace Cenraurea {
                 glGraphicComponentFactory->game = game;
                 auto gameScene = new GameScene(game);
                 auto gameScenePtr = std::shared_ptr<GameScene>(gameScene);
-                gameScenePtr->initialize();
+                //gameScenePtr->initialize();
                 game->setGameScene(gameScenePtr);
                 return game;
             }
