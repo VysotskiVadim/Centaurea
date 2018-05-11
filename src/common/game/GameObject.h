@@ -7,13 +7,13 @@ using namespace std;
 
 namespace Cenraurea {
     namespace Common {
-        namespace Game {
+        namespace GameEngine {
             class GameObject {
             private:
                 shared_ptr<IGraphicComponent> _graphicComponent;
             public:
                 GameObject(shared_ptr<IGraphicComponent>);
-                void update();
+                void update(void);
             };
         }
     }

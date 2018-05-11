@@ -1,11 +1,11 @@
 #import "GameObject.h"
 
-using Cenraurea::Common::Game;
+using namespace Cenraurea::Common::GameEngine;
 
 GameObject::GameObject(std::shared_ptr<IGraphicComponent> graphic)
 :_graphicComponent(graphic)
 {}
 
-GameObject::update() {
-    _graphicComponent.update();
+void GameObject::update(void) {
+    _graphicComponent->update();
 }

@@ -1,17 +1,17 @@
 #import "ViewController.h"
-#import "game.h"
+#import "glGame.h"
 #import "IosTextureLoader.hpp"
 #import "ITextureLoader.h"
 #import <memory>
 
-using Cenraurea::Common::Game::Game;
-using Cenraurea::Common::Game::ITextureLoader;
+using Cenraurea::Common::GameEngine::Game;
+using Cenraurea::Common::GameEngine::ITextureLoader;
 
 @interface ViewController () {
 }
 
 @property (strong, nonatomic) EAGLContext *context;
-@property Game *game;
+@property std::shared_ptr<Game> game;
 
 //- (void)setupGL;
 //
@@ -36,7 +36,7 @@ using Cenraurea::Common::Game::ITextureLoader;
     view.drawableStencilFormat = GLKViewDrawableStencilFormat8;
     
     ITextureLoader *textureLoader = new IosTextureLoader;
-    self.game = new Cenraurea::Common::Game::Game(std::shared_ptr<ITextureLoader>(textureLoader));
+    self.game = Cenraurea::Common::GameEngine::createGlGame(std::shared_ptr<ITextureLoader>(textureLoader));
     [self setupGL];
 }
 

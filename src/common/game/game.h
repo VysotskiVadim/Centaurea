@@ -1,29 +1,31 @@
 #pragma once
 
 #include <memory>
-#include "glwrapper.h"
+#include "IGraphicComponentFactory.h"
 #include "ITextureLoader.h"
-#include <chrono>
-
+#include "Screen.h"
+#include "IGameScene.h"
 
 namespace Cenraurea {
     namespace Common {
-        namespace Game {
-
+        namespace GameEngine {
+            
             class Game {
             private:
-                unsigned int _shaderProgram = 0;
-                bool setupShaders(void);
-                std::shared_ptr<ITextureLoader> _textureLoader;
-                std::chrono::high_resolution_clock::time_point _startTime;
+                std::shared_ptr<IGameScene> _gameScene;
             public:
-                Game(std::shared_ptr<ITextureLoader>);
+                std::shared_ptr<ITextureLoader> textureLoader;
+                std::shared_ptr<IGraphicComponentFactory> graphicComponentFactory;
+                Screen screen;
+                Game(std::shared_ptr<ITextureLoader>, std::shared_ptr<IGraphicComponentFactory>);
                 void on_surface_created(void);
                 void on_surface_changed(std::int32_t width, std::int32_t height);
                 void on_draw_frame(void);
+                void setGameScene(std::shared_ptr<IGameScene> gameScene);
             };
+            
+            
 
         }
     }
 }
-

@@ -6,7 +6,7 @@
 
 namespace Cenraurea {
     namespace Common {
-        namespace Game {
+        namespace GameEngine {
 
             class ITextureLoader {
             public:

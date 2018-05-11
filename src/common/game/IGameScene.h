@@ -3,10 +3,10 @@
 namespace Cenraurea {
     namespace Common {
         namespace GameEngine {
-            class IGraphicComponent {
+            class IGameScene {
             public:
-                void virtual initialize() = 0;
                 void virtual update() = 0;
+                void virtual initialize() = 0;
             };
         }
     }

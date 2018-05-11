@@ -4,15 +4,22 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../../dep/tinyobjloader ${CMAKE_
 
 add_library(game SHARED
     glwrapper.h
-    game.h
-    game.cpp
+    Game.h
+    Game.cpp
+    GlGame.h
     ITextureLoader.h
     GameObject.h
     GameObject.cpp
     IGraphicComponent.h
     IGraphicComponentFactory.h
+    IGameScene.h
     GameScene.h
     GameScene.cpp
+    GlGraphicComponentFactory.h
+    GlGraphicComponentFactory.cpp
+    ReflectionGlGraphicComponent.h
+    ReflectionGlGraphicComponent.cpp
+    Screen.h
 )
 
 set(CMAKE_CXX_STANDARD 11)

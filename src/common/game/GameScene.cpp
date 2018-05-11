@@ -1,18 +1,21 @@
 #import "GameScene.h"
-#import "gameObject.h"
+#import "GameObject.h"
 
-using Cenraurea::Common::Game;
+using namespace Cenraurea::Common::GameEngine;
 
-GameScene::GameScene(std::shared_ptr<IGraphicComponentFactory> graphicComponentFactory)
-: _graphicComponentFactory(graphicComponentFactory)
+GameScene::GameScene(std::shared_ptr<Game> game)
+: _game(game)
 { }
 
 void GameScene::update(){
-    for (GameObject obj in _objects) {
-        obj.update();
+    for (auto obj : _objects) {
+        obj->update();
     }
 }
 
 void GameScene::initialize() {
-    
+    auto graphicComponent = _game->graphicComponentFactory->loadModel("reflection");
+    graphicComponent->initialize();
+    auto gameObject = std::shared_ptr<GameObject>(new GameObject(graphicComponent));
+    _objects.push_back(gameObject);
 }

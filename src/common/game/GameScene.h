@@ -1,23 +1,22 @@
 #pragma once
 
-#import "gameObject.h"
+#import "GameObject.h"
 #import <vector>
 #import <memory.h>
-#import "IGraphicComponentFactory.h"
-
-using namespace Centaurea::Common::Game;
+#import "Game.h"
+#import "IGameScene.h"
 
 namespace Cenraurea {
     namespace Common {
-        namespace Game {
-            class GameScene {
+        namespace GameEngine {
+            class GameScene: public IGameScene {
             private:
-                std::shared_ptr<IGraphicComponentFactory> _graphicComponentFactory;
+                std::shared_ptr<Game> _game;
                 std::vector<std::shared_ptr<GameObject>> _objects;
             public:
-                GameScene(std::shared_ptr<IGraphicComponentFactory>);
-                void update();
-                void initialize();
+                GameScene(std::shared_ptr<Game>);
+                void virtual update() override;
+                void virtual initialize() override;
             };
         }
     }

@@ -1,13 +1,16 @@
 #pragma once
 
 #import "IGraphicComponent.h"
+#import <string>
+#import <memory>
 
-namespace Centaurea {
+namespace Cenraurea {
     namespace Common {
-        namespace Game {
+        namespace GameEngine {
+            
             class IGraphicComponentFactory {
             public:
-                IGraphicComponent virtual loadModel(std::string name) = 0;
+                virtual std::shared_ptr<IGraphicComponent> loadModel(std::string name) = 0;
             };
         }
     }

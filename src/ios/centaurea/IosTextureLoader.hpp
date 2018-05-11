@@ -3,7 +3,7 @@
 #include "ITextureLoader.h"
 #include <string>
 
-using Cenraurea::Common::Game::ITextureLoader;
+using Cenraurea::Common::GameEngine::ITextureLoader;
 
 class IosTextureLoader : public ITextureLoader {
 public:
