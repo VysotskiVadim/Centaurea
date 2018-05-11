@@ -7,6 +7,8 @@
 #include "ITextureLoader.h"
 #include "Game.h"
 
+const int TEXTURE_COUNT = 2;
+
 namespace Cenraurea {
     namespace Common {
         namespace GameEngine {
@@ -18,10 +20,14 @@ namespace Cenraurea {
                 std::shared_ptr<Game> _game;
                 std::shared_ptr<ITextureLoader> _textureLoader;
                 float _rotationAngle = 0;
+                
+                GLuint _textures[TEXTURE_COUNT];
+                GLuint _vertexBufferObject;
             public:
                 ReflectionGlGraphicComponent(std::shared_ptr<Game>);
                 void update(float elapsed) override;
                 void initialize() override;
+                void dispose() override;
             };
         }
     }

@@ -192,9 +192,8 @@ void ReflectionGlGraphicComponent::initialize() {
     };
     int rowSize = 8 * sizeof(GLfloat);
     
-    GLuint VBO;
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glGenBuffers(1, &_vertexBufferObject);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferObject);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
     GLint positionAttribute = glGetAttribLocation(_shaderProgram, "position");
@@ -209,11 +208,10 @@ void ReflectionGlGraphicComponent::initialize() {
     glEnableVertexAttribArray(textureCoordinatesAttribute);
     glVertexAttribPointer(textureCoordinatesAttribute, 2, GL_FLOAT, GL_FALSE, rowSize, (void*)(6*sizeof(float)));
     
-    GLuint textures[2];
-    glGenTextures(2, textures);
+    glGenTextures(TEXTURE_COUNT, _textures);
     
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, textures[0]);
+    glBindTexture(GL_TEXTURE_2D, _textures[0]);
     _textureLoader->loadTexture("logo");
     glUniform1i(glGetUniformLocation(_shaderProgram, "texKitten"), 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -222,7 +220,7 @@ void ReflectionGlGraphicComponent::initialize() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, textures[1]);
+    glBindTexture(GL_TEXTURE_2D, _textures[1]);
     _textureLoader->loadTexture("logo2");
     glUniform1i(glGetUniformLocation(_shaderProgram, "texPuppy"), 1);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -248,4 +246,10 @@ void ReflectionGlGraphicComponent::setupSizes() {
         glm::mat4 proj = glm::perspective(glm::radians(45.0f), screenRatio, 1.0f, 10.0f);
         GLint uniProj = glGetUniformLocation(_shaderProgram, "proj");
         glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
+}
+
+void ReflectionGlGraphicComponent::dispose() {
+    glDeleteTextures(TEXTURE_COUNT, _textures);
+    glDeleteProgram(_shaderProgram);
+    glDeleteBuffers(1, &_vertexBufferObject);
 }

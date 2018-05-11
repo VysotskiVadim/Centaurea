@@ -20,6 +20,7 @@ add_library(game SHARED
     ReflectionGlGraphicComponent.h
     ReflectionGlGraphicComponent.cpp
     Screen.h
+    IDisposable.h
 )
 
 set(CMAKE_CXX_STANDARD 11)
