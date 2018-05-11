@@ -13,6 +13,7 @@ namespace Cenraurea {
             class Game {
             private:
                 std::shared_ptr<IGameScene> _gameScene;
+                bool _isInitialized = false;
             public:
                 std::shared_ptr<ITextureLoader> textureLoader;
                 std::shared_ptr<IGraphicComponentFactory> graphicComponentFactory;

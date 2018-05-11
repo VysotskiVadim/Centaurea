@@ -12,10 +12,16 @@ graphicComponentFactory(graphicComponentFactory)
 
 void Cenraurea::Common::GameEngine::Game::setGameScene(std::shared_ptr<IGameScene> gameScene) {
     _gameScene = gameScene;
+    if (_isInitialized) {
+        _gameScene->initialize();
+    }
 }
 
 void Game::on_surface_created(void) {
-    _gameScene->initialize();
+    if (_gameScene != nullptr) {
+         _gameScene->initialize();
+    }
+    _isInitialized = true;
 }
 
 void Game::on_draw_frame(void) {
