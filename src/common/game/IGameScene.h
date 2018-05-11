@@ -5,7 +5,7 @@ namespace Cenraurea {
         namespace GameEngine {
             class IGameScene {
             public:
-                void virtual update() = 0;
+                void virtual update(float elapsed) = 0;
                 void virtual initialize() = 0;
             };
         }

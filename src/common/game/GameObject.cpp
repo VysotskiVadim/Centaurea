@@ -6,6 +6,6 @@ GameObject::GameObject(std::shared_ptr<IGraphicComponent> graphic)
 :_graphicComponent(graphic)
 {}
 
-void GameObject::update(void) {
-    _graphicComponent->update();
+void GameObject::update(float elapsed) {
+    _graphicComponent->update(elapsed);
 }

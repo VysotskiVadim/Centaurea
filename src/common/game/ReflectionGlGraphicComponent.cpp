@@ -90,16 +90,14 @@ bool ReflectionGlGraphicComponent::setupShaders(void) {
     return true;
 }
 
-void ReflectionGlGraphicComponent::update() {
+void ReflectionGlGraphicComponent::update(float elapsed) {
     setupSizes();
     
-    auto currentTime = std::chrono::high_resolution_clock::now();
-    float time = std::chrono::duration_cast<std::chrono::duration<float>>(currentTime - _startTime).count();
-    
+    _rotationAngle += elapsed / 1000 * glm::radians(180.0f);
     glm::mat4 modelMatrix;
     modelMatrix = glm::rotate(
                               modelMatrix,
-                              time * glm::radians(180.0f),
+                              _rotationAngle,
                               glm::vec3(0.0f, 0.0f, 1.0f)
                               );
     
@@ -231,9 +229,6 @@ void ReflectionGlGraphicComponent::initialize() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    
-    
-    _startTime = std::chrono::high_resolution_clock::now();
     
     glEnable(GL_DEPTH_TEST);
     

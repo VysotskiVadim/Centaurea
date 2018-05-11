@@ -5,6 +5,7 @@
 #include "ITextureLoader.h"
 #include "Screen.h"
 #include "IGameScene.h"
+#include <chrono>
 
 namespace Cenraurea {
     namespace Common {
@@ -14,6 +15,7 @@ namespace Cenraurea {
             private:
                 std::shared_ptr<IGameScene> _gameScene;
                 bool _isInitialized = false;
+                std::chrono::high_resolution_clock::time_point _previousFrameTime;
             public:
                 std::shared_ptr<ITextureLoader> textureLoader;
                 std::shared_ptr<IGraphicComponentFactory> graphicComponentFactory;

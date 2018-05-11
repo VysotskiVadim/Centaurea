@@ -13,7 +13,7 @@ namespace Cenraurea {
                 shared_ptr<IGraphicComponent> _graphicComponent;
             public:
                 GameObject(shared_ptr<IGraphicComponent>);
-                void update(void);
+                void update(float elapsed);
             };
         }
     }

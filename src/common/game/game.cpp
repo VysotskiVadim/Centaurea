@@ -25,9 +25,12 @@ void Game::on_surface_created(void) {
 }
 
 void Game::on_draw_frame(void) {
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    float elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - _previousFrameTime).count();
     if (_gameScene != nullptr) {
-       _gameScene->update();
+       _gameScene->update(elapsed);
     }
+    _previousFrameTime = currentTime;
 }
 
 void Game::on_surface_changed(std::int32_t width, std::int32_t height) {

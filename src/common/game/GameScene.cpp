@@ -7,9 +7,9 @@ GameScene::GameScene(std::shared_ptr<Game> game)
 : _game(game)
 { }
 
-void GameScene::update(){
+void GameScene::update(float elapsed){
     for (auto obj : _objects) {
-        obj->update();
+        obj->update(elapsed);
     }
 }
 

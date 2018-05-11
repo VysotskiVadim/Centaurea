@@ -6,7 +6,7 @@ namespace Cenraurea {
             class IGraphicComponent {
             public:
                 void virtual initialize() = 0;
-                void virtual update() = 0;
+                void virtual update(float elapsed) = 0;
             };
         }
     }

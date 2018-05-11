@@ -5,8 +5,7 @@
 #include <memory>
 #include "glwrapper.h"
 #include "ITextureLoader.h"
-#include <chrono>
-#include "game.h"
+#include "Game.h"
 
 namespace Cenraurea {
     namespace Common {
@@ -18,10 +17,10 @@ namespace Cenraurea {
                 void setupSizes(void);
                 std::shared_ptr<Game> _game;
                 std::shared_ptr<ITextureLoader> _textureLoader;
-                std::chrono::high_resolution_clock::time_point _startTime;
+                float _rotationAngle = 0;
             public:
                 ReflectionGlGraphicComponent(std::shared_ptr<Game>);
-                void update() override;
+                void update(float elapsed) override;
                 void initialize() override;
             };
         }

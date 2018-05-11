@@ -15,7 +15,7 @@ namespace Cenraurea {
                 std::vector<std::shared_ptr<GameObject>> _objects;
             public:
                 GameScene(std::shared_ptr<Game>);
-                void virtual update() override;
+                void virtual update(float elapsed) override;
                 void virtual initialize() override;
             };
         }
