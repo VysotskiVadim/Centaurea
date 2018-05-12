@@ -1,5 +1,5 @@
-#import <UIKit/UIKit.h>
-#import <GLKit/GLKit.h>
+#include <UIKit/UIKit.h>
+#include <GLKit/GLKit.h>
 
 @interface ViewController : GLKViewController
 

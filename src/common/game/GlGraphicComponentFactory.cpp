@@ -1,6 +1,6 @@
-#import "GlGraphicComponentFactory.h"
-#import "ReflectionGlGraphicComponent.h"
-#import "IGraphicComponent.h"
+#include "GlGraphicComponentFactory.h"
+#include "ReflectionGlGraphicComponent.h"
+#include "IGraphicComponent.h"
 
 using namespace Cenraurea::Common::GameEngine;
 

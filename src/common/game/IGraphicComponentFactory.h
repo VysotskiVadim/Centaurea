@@ -1,8 +1,8 @@
 #pragma once
 
-#import "IGraphicComponent.h"
-#import <string>
-#import <memory>
+#include "IGraphicComponent.h"
+#include <string>
+#include <memory>
 
 namespace Cenraurea {
     namespace Common {

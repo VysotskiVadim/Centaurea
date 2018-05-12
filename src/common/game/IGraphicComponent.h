@@ -1,6 +1,6 @@
 #pragma once
 
-#import "IDisposable.h"
+#include "IDisposable.h"
 
 namespace Cenraurea {
     namespace Common {

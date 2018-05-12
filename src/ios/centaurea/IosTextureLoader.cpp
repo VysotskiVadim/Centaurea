@@ -1,6 +1,6 @@
 #include "IosTextureLoader.hpp"
-#import <string>
-#import <UIKit/UIKit.h>
+#include <string>
+#include <UIKit/UIKit.h>
 #include <OpenGLES/ES3/gl.h>
 
 void IosTextureLoader::loadTexture(std::string id) {

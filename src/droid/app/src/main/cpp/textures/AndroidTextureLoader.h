@@ -1,7 +1,7 @@
 #pragma once
 
 #include <jni.h>
-#import "ITextureLoader.h"
+#include "ITextureLoader.h"
 
 using namespace Cenraurea::Common::GameEngine;
 

@@ -1,10 +1,10 @@
 #pragma once
 
-#import "GameObject.h"
-#import <vector>
-#import <memory.h>
-#import "Game.h"
-#import "IGameScene.h"
+#include "GameObject.h"
+#include <vector>
+#include <memory.h>
+#include "Game.h"
+#include "IGameScene.h"
 
 namespace Cenraurea {
     namespace Common {

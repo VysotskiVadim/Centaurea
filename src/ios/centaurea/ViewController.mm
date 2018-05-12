@@ -1,8 +1,8 @@
-#import "ViewController.h"
-#import "glGame.h"
-#import "IosTextureLoader.hpp"
-#import "ITextureLoader.h"
-#import <memory>
+#include "ViewController.h"
+#include "glGame.h"
+#include "IosTextureLoader.hpp"
+#include "ITextureLoader.h"
+#include <memory>
 
 using Cenraurea::Common::GameEngine::Game;
 using Cenraurea::Common::GameEngine::ITextureLoader;

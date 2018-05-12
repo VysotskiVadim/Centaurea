@@ -1,5 +1,5 @@
-#import "AppDelegate.h"
-#import "ViewController.h"
+#include "AppDelegate.h"
+#include "ViewController.h"
 
 @interface AppDelegate ()
 

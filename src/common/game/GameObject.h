@@ -1,8 +1,8 @@
 #pragma once
 
-#import <memory>
-#import "IGraphicComponent.h"
-#import "IDisposable.h"
+#include <memory>
+#include "IGraphicComponent.h"
+#include "IDisposable.h"
 
 using namespace std;
 

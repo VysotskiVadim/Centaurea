@@ -1,8 +1,8 @@
 #pragma once
 
-#import "Game.h"
-#import "IGraphicComponentFactory.h"
-#import <memory>
+#include "Game.h"
+#include "IGraphicComponentFactory.h"
+#include <memory>
 
 namespace Cenraurea {
     namespace Common {

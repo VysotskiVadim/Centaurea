@@ -1,4 +1,4 @@
-#import "GameObject.h"
+#include "GameObject.h"
 
 using namespace Cenraurea::Common::GameEngine;
 

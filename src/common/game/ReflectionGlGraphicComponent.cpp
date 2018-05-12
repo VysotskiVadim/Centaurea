@@ -1,4 +1,4 @@
-#import "ReflectionGlGraphicComponent.h"
+#include "ReflectionGlGraphicComponent.h"
 
 #include <iostream>
 #include "glwrapper.h"

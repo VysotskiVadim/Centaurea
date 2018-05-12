@@ -1,7 +1,7 @@
 #pragma once
 
-#import "IGraphicComponent.h"
-#import <string>
+#include "IGraphicComponent.h"
+#include <string>
 #include <memory>
 #include "glwrapper.h"
 #include "ITextureLoader.h"

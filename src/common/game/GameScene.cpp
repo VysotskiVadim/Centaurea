@@ -1,5 +1,5 @@
-#import "GameScene.h"
-#import "GameObject.h"
+#include "GameScene.h"
+#include "GameObject.h"
 
 using namespace Cenraurea::Common::GameEngine;
 
