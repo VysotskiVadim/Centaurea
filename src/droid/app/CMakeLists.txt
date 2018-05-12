@@ -5,6 +5,10 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY BOTH)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../common/cmake")
+find_package(GLM REQUIRED)
+include_directories(${GLM_INCLUDE_DIRS})
+
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../common/game ${CMAKE_BINARY_DIR}/game)
 
 add_library(androidgame SHARED

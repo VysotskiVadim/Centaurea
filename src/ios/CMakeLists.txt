@@ -41,6 +41,10 @@ add_executable(
     ${IMAGES}
 )
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../common/cmake")
+find_package(GLM REQUIRED)
+include_directories(${GLM_INCLUDE_DIRS})
+
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../common/game ${CMAKE_BINARY_DIR}/game)
 
 target_include_directories(${NAME} PUBLIC ${GAME_INCLUDE_DIR})
