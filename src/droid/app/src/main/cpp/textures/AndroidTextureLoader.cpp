@@ -1,6 +1,5 @@
 #include "AndroidTextureLoader.h"
 
-using Cenraurea::Common::Game::ITextureLoader;
 
 AndroidTextureLoader::AndroidTextureLoader(JNIEnv *javaEnvironment, jobject jniWrapperObject)
         : _javaEnvironment(javaEnvironment),

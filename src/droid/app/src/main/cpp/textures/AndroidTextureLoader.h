@@ -3,7 +3,7 @@
 #include <jni.h>
 #import "ITextureLoader.h"
 
-using Cenraurea::Common::Game::ITextureLoader;
+using namespace Cenraurea::Common::GameEngine;
 
 class AndroidTextureLoader : public ITextureLoader {
 private:
