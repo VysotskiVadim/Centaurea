@@ -21,9 +21,9 @@ namespace Cenraurea {
                 std::shared_ptr<IGraphicComponentFactory> graphicComponentFactory;
                 Screen screen;
                 Game(std::shared_ptr<ITextureLoader>, std::shared_ptr<IGraphicComponentFactory>);
-                void on_surface_created(void);
-                void on_surface_changed(std::int32_t width, std::int32_t height);
-                void on_draw_frame(void);
+                void initialize(void);
+                void screenSizeChanged(std::int32_t width, std::int32_t height);
+                void update(void);
                 void setGameScene(std::shared_ptr<IGameScene> gameScene);
             };
             

@@ -51,19 +51,19 @@ using Cenraurea::Common::GameEngine::ITextureLoader;
 - (void)setupGL
 {
     [EAGLContext setCurrentContext:self.context];
-    self.game->on_surface_created();
-    self.game->on_surface_changed(self.view.bounds.size.width, self.view.bounds.size.height);
+    self.game->initialize();
+    self.game->screenSizeChanged(self.view.bounds.size.width, self.view.bounds.size.height);
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    self.game->on_draw_frame();
+    self.game->update();
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    self.game->on_surface_changed(size.width, size.height);
+    self.game->screenSizeChanged(size.width, size.height);
 }
 
 @end
