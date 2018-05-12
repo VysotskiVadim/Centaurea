@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.4.1)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../../dep/tinyobjloader ${CMAKE_BINARY_DIR}/tinyobjloader)
 
-add_library(game SHARED
+add_library(game STATIC
     glwrapper.h
     Game.h
     Game.cpp
