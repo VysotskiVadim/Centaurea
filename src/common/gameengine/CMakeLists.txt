@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.4.1)
+set(PROJECT_NAME gameengine)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../../dep/tinyobjloader ${CMAKE_BINARY_DIR}/tinyobjloader)
 
-add_library(game STATIC
+add_library(${PROJECT_NAME} STATIC
     glwrapper.h
     Game.h
     Game.cpp
@@ -24,10 +25,10 @@ add_library(game STATIC
 )
 
 set(CMAKE_CXX_STANDARD 11)
-set_target_properties(game PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
-set(GAME_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
-set(GAME_LIBRARY game PARENT_SCOPE)
+set(GAME_ENGINE_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
+set(GAME_ENGINE_LIBRARY ${PROJECT_NAME} PARENT_SCOPE)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
 find_package(GLM REQUIRED)
@@ -35,10 +36,10 @@ include_directories(${GLM_INCLUDE_DIRS})
 
 if(PLATFORM_ANDROID)
     add_definitions(-DPLATFORM_ANDROID)
-    target_link_libraries(game GLESv3)
+    target_link_libraries(${PROJECT_NAME} GLESv3)
 elseif(PLATFORM_IOS)
     add_definitions(-DPLATFORM_IOS)
 
     set(OPENGLES_gl_LIBRARY "-framework OpenGLES")
-    target_link_libraries(game ${OPENGLES_gl_LIBRARY})
+    target_link_libraries(${PROJECT_NAME} ${OPENGLES_gl_LIBRARY})
 endif(PLATFORM_ANDROID)

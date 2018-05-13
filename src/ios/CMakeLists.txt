@@ -45,10 +45,10 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../common/cmake")
 find_package(GLM REQUIRED)
 include_directories(${GLM_INCLUDE_DIRS})
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../common/game ${CMAKE_BINARY_DIR}/game)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../common/gameengine ${CMAKE_BINARY_DIR}/gameengine)
 
-target_include_directories(${NAME} PUBLIC ${GAME_INCLUDE_DIR})
-target_link_libraries(${NAME} ${GAME_LIBRARY})
+target_include_directories(${NAME} PUBLIC ${GAME_ENGINE_INCLUDE_DIR})
+target_link_libraries(${NAME} ${GAME_ENGINE_LIBRARY})
 
 # code signing
 set_target_properties(
