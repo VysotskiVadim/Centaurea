@@ -4,20 +4,21 @@
 #include <glm/glm.hpp>
 #include "IGraphicComponent.h"
 #include "IDisposable.h"
+#include "TransformModel.h"
+#include "IGameObject.h"
 
 using namespace std;
 
 namespace Cenraurea {
     namespace Common {
         namespace GameEngine {
-            class GameObject: public IDisposable {
+            class GameObject: public IGameObject {
             private:
                 shared_ptr<IGraphicComponent> _graphicComponent;
             public:
-                glm::mat4 transform;
                 GameObject(shared_ptr<IGraphicComponent>);
-                void update(float elapsed);
-                void dispose();
+                void virtual update(float elapsed) override;
+                void virtual dispose() override;
             };
         }
     }

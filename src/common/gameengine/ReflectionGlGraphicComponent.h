@@ -25,7 +25,7 @@ namespace Cenraurea {
                 GLuint _vertexBufferObject;
             public:
                 ReflectionGlGraphicComponent(std::shared_ptr<Game>);
-                void update(float elapsed) override;
+                void update(float elapsed, IGameObject* obj) override;
                 void initialize() override;
                 void dispose() override;
             };

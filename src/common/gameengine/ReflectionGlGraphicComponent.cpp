@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "GlHelper.h"
 
 const char* _vertexSource = R"glsl(#version 300 es
 in vec2 textureCoordinates;
@@ -90,16 +91,10 @@ bool ReflectionGlGraphicComponent::setupShaders(void) {
     return true;
 }
 
-void ReflectionGlGraphicComponent::update(float elapsed) {
+void ReflectionGlGraphicComponent::update(float elapsed, IGameObject* obj) {
     setupSizes();
     
-    _rotationAngle += elapsed / 1000 * glm::radians(180.0f);
-    glm::mat4 modelMatrix;
-    modelMatrix = glm::rotate(
-                              modelMatrix,
-                              _rotationAngle,
-                              glm::vec3(0.0f, 0.0f, 1.0f)
-                              );
+    glm::mat4 modelMatrix = getModelMatrix(obj->transform);
     
     GLint uniModel = glGetUniformLocation(_shaderProgram, "model");
     glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(modelMatrix));

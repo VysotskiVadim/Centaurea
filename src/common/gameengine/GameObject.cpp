@@ -7,7 +7,7 @@ GameObject::GameObject(std::shared_ptr<IGraphicComponent> graphic)
 {}
 
 void GameObject::update(float elapsed) {
-    _graphicComponent->update(elapsed);
+    _graphicComponent->update(elapsed, this);
 }
 
 void GameObject::dispose() {

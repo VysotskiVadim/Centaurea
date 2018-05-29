@@ -9,6 +9,7 @@ add_library(${PROJECT_NAME} STATIC
     Game.cpp
     GlGame.h
     ITextureLoader.h
+    IGameObject.h
     GameObject.h
     GameObject.cpp
     IGraphicComponent.h
@@ -22,6 +23,8 @@ add_library(${PROJECT_NAME} STATIC
     ReflectionGlGraphicComponent.cpp
     Screen.h
     IDisposable.h
+    TransformModel.h
+    GlHelper.h
 )
 
 set(CMAKE_CXX_STANDARD 11)
