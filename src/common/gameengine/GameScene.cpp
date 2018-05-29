@@ -11,6 +11,10 @@ void GameScene::update(float elapsed){
     for (auto obj : _objects) {
         obj->transform.rotationAngle += elapsed / 1000 * 180;
         obj->update(elapsed);
+        obj->transform.bounds.position.x += elapsed / 1000;
+        if (obj->transform.bounds.position.x > 1) {
+            obj->transform.bounds.position.x = -1;
+        }
     }
 }
 

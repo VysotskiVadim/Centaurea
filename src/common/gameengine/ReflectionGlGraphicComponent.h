@@ -19,7 +19,6 @@ namespace Cenraurea {
                 void setupSizes(void);
                 std::shared_ptr<Game> _game;
                 std::shared_ptr<ITextureLoader> _textureLoader;
-                float _rotationAngle = 0;
                 
                 GLuint _textures[TEXTURE_COUNT];
                 GLuint _vertexBufferObject;
