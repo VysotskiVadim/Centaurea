@@ -25,6 +25,7 @@ add_library(${PROJECT_NAME} STATIC
     IDisposable.h
     TransformModel.h
     GlHelper.h
+    Camera.h
 )
 
 set(CMAKE_CXX_STANDARD 11)

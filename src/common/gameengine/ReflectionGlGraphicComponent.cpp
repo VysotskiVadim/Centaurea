@@ -229,18 +229,14 @@ void ReflectionGlGraphicComponent::initialize() {
 }
 
 void ReflectionGlGraphicComponent::setupSizes() {
-        glm::mat4 view = glm::lookAt(
-                                     glm::vec3(3.5f, 3.5f, 3.0f),
-                                     glm::vec3(0.0f, 0.0f, 0.0f),
-                                     glm::vec3(0.0f, 0.0f, 1.0f)
-                                     );
-        GLint uniView = glGetUniformLocation(_shaderProgram, "view");
-        glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
-    
-        float_t screenRatio = ((float_t)_game->screen.size.width) / _game->screen.size.height;
-        glm::mat4 proj = glm::perspective(glm::radians(45.0f), screenRatio, 1.0f, 10.0f);
-        GLint uniProj = glGetUniformLocation(_shaderProgram, "proj");
-        glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
+    glm::mat4 view = getViewMatrix(_game->camera);
+    GLint uniView = glGetUniformLocation(_shaderProgram, "view");
+    glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
+
+    float_t screenRatio = ((float_t)_game->screen.size.width) / _game->screen.size.height;
+    glm::mat4 proj = glm::perspective(glm::radians(45.0f), screenRatio, 1.0f, 10.0f);
+    GLint uniProj = glGetUniformLocation(_shaderProgram, "proj");
+    glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
 }
 
 void ReflectionGlGraphicComponent::dispose() {
