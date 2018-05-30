@@ -27,7 +27,11 @@ namespace Cenraurea {
                                              );
                 return view;
             }
-                
+            
+            glm::mat4 getProjectctionMatrix(const Camera &camera) {
+                glm::mat4 proj = glm::perspective(glm::radians(camera.fieldOfView), camera.aspectRatio, camera.nearClippingPlane, camera.farClippingPlane);
+                return proj;
+            }
             
         }
     }

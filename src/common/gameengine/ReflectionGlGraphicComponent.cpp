@@ -233,8 +233,7 @@ void ReflectionGlGraphicComponent::setupSizes() {
     GLint uniView = glGetUniformLocation(_shaderProgram, "view");
     glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
 
-    float_t screenRatio = ((float_t)_game->screen.size.width) / _game->screen.size.height;
-    glm::mat4 proj = glm::perspective(glm::radians(45.0f), screenRatio, 1.0f, 10.0f);
+    glm::mat4 proj = getProjectctionMatrix(_game->camera);
     GLint uniProj = glGetUniformLocation(_shaderProgram, "proj");
     glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
 }

@@ -36,4 +36,5 @@ void Game::update(void) {
 void Game::screenSizeChanged(std::int32_t width, std::int32_t height) {
     screen.size.height = height;
     screen.size.width = width;
+    camera.aspectRatio = (float_t)width / (float_t)height;
 }
